@@ -4,6 +4,7 @@ This project is designed to detect fake news using machine learning and natural 
 Table of Contents:
 - [Project Overview](#Overview)
 - [Setup](#Setup)
+- [Usage](#Usage)
 
 
 
@@ -12,6 +13,7 @@ This project aims to detect fake news by analyzing text data. It uses NLP to pre
 
 ## Setup
 1. Extract the Project Files:
+ 
  Unzip the attached project files into your preferred directory.
 
 2. Install Dependencies:
@@ -27,12 +29,11 @@ Ensure Python 3.8 or higher is installed. Install dependencies from requirements
 python setup_nltk.py
 ``` 
 
-Usage
+## Usage
 ```  bash
 python3 Fake_news_classifier.py
 ``` 
 
-hii
 
 
 
