@@ -1,0 +1,6 @@
+from preprocess import x_train, y_train, x_test, y_test
+from eval_func import evaluate_logistic_regression_bt
+
+
+
+evaluate_logistic_regression_bt(x_train, y_train, x_test, y_test)

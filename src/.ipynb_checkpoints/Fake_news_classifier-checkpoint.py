@@ -36,13 +36,14 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.naive_bayes import GaussianNB
 
 
-file_path = '/data/BuzzFeed_real_news_content.csv'
+import os
+file_path = os.path.join(os.path.dirname(__file__), 'data', 'BuzzFeed_real_news_content.csv')
 real_news = pd.read_csv(file_path)
-real_news.head()
 
-file_path2= 'data/BuzzFeed_fake_news_content.csv'
-fake_news= pd.read_csv(file_path2)
-fake_news.head()
+import os
+file_path2 = os.path.join(os.path.dirname(__file__), 'data', 'BuzzFeed_fake_news_content.csv')
+fake_news = pd.read_csv(file_path2)
+
 
 news_df = pd.concat([real_news, fake_news], ignore_index=True)
 
@@ -531,14 +532,6 @@ print(f"Test data shape: {x_test.shape}")
 print(f"Training labels shape: {y_train.shape}")
 print(f"Test labels shape: {y_test.shape}")
 
-def evaluate_naive_bayes_title(x_train, y_train, x_test, y_test):
-    nb_title = MultinomialNB()
-    nb_title.fit(x_train, y_train)
-
-    predicted_nb_title = nb_title.predict(x_test)
-    accuracy_nb_title = accuracy_score(y_test, predicted_nb_title)
-    print(f"Accuracy of Naive Bayes on the title dataset: {accuracy_nb_title:.4f}")
-
 def evaluate_logistic_regression_title(x_train, y_train, x_test, y_test):
     log_fit_title = LogisticRegression(penalty='l2', solver='liblinear', random_state=123)
     log_fit_title.fit(x_train, y_train)
@@ -703,7 +696,5 @@ evaluate_naive_bayes_body(x_train_body, y_train_body, x_test_body, y_test_body)
 evaluate_logistic_regression_body(x_train_body, y_train_body, x_test_body, y_test_body)
 evaluate_random_forest_body(x_train_body, y_train_body, x_test_body, y_test_body)
 
-   
-evaluate_naive_bayes_title(x_train, y_train, x_test, y_test)
 evaluate_logistic_regression_title(x_train, y_train, x_test, y_test)
 evaluate_random_forest_title(x_train, y_train, x_test, y_test)
