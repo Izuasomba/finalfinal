@@ -28,11 +28,23 @@ import re
 
 
 
-file_path = ('../data/BuzzFeed_real_news_content.csv')
+import os
+
+# Construct the path to your data file
+base_path = os.path.dirname(os.path.abspath(__file__))  # Get the current directory
+data_dir = os.path.join(base_path, '../data')  # Navigate to the data folder
+file_path = os.path.join(data_dir, 'BuzzFeed_real_news_content.csv')
+
 real_news = pd.read_csv(file_path)
 real_news.head()
 
-file_path2= ('../data/BuzzFeed_fake_news_content.csv')
+import os
+
+# Construct the path to your data file
+base_path2 = os.path.dirname(os.path.abspath(__file__))  # Get the current directory
+data_dir2 = os.path.join(base_path2, '../data')  # Navigate to the data folder
+file_path2 = os.path.join(data_dir2, 'BuzzFeed_fake_news_content.csv')
+
 fake_news= pd.read_csv(file_path2)
 fake_news.head()
 
