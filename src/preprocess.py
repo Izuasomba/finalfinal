@@ -38,6 +38,7 @@ def vectorize_input(corpus, max_df=1.0, tokenizer=None):
     """
     Vectorizes input text corpus with optional max_df and tokenizer parameters.
     """
+    
     vectorizer = CountVectorizer(max_df=max_df, tokenizer=tokenizer)
     dtm = vectorizer.fit_transform(corpus)
     return dtm.toarray(), vectorizer
@@ -110,7 +111,8 @@ def combine_title_body_dtm(body_dtm, title_dtm):
 title_body_dtm = combine_title_body_dtm(body_dtm, title_dtm)
 
 # Train-test split
+random_seed = 42
+np.random.seed(random_seed)
 y_true = news_df['type'].values
-x_train, x_test, y_train, y_test = train_test_split(title_body_dtm, y_true, test_size=0.25, random_state=123, stratify=y_true)
-
+x_train, x_test, y_train, y_test = train_test_split(title_body_dtm, y_true, test_size=0.25, random_state=random_seed, stratify=y_true)
 training_indices = np.random.choice(range(title_body_dtm.shape[0]), size=int(0.8 * title_body_dtm.shape[0]), replace=False)

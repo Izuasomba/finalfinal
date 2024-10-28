@@ -4,6 +4,10 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+import numpy as np
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+from sklearn.preprocessing import StandardScaler
+
 
 
 
@@ -119,12 +123,6 @@ def evaluate_random_forest_body(x_train_body, y_train_body, x_test_body, y_test_
     print(f"Random Forest (Body) Evaluation took {end_time - start_time:.4f} seconds.\n")
 
 
-import numpy as np
-from sklearn.naive_bayes import MultinomialNB
-from sklearn.linear_model import LogisticRegression
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
-from sklearn.preprocessing import StandardScaler
 
 def evaluate_naive_bayes_bt(title_body_dtm, training_indices, y_true):
     start_time = time.time()
