@@ -119,7 +119,6 @@ def evaluate_random_forest_body(x_train_body, y_train_body, x_test_body, y_test_
     print(f"Random Forest (Body) Evaluation took {end_time - start_time:.4f} seconds.\n")
 
 
-import time
 import numpy as np
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.linear_model import LogisticRegression
@@ -133,6 +132,7 @@ def evaluate_naive_bayes_bt(title_body_dtm, training_indices, y_true):
     nb_body_tb = MultinomialNB()
     nb_body_tb.fit(title_body_dtm[training_indices], y_true[training_indices])
 
+    # Predict using the rest of the data
     predicted_nb_tb = nb_body_tb.predict(title_body_dtm[np.setdiff1d(np.arange(title_body_dtm.shape[0]), training_indices)])
     accuracy_nb_tb = accuracy_score(y_true[np.setdiff1d(np.arange(y_true.shape[0]), training_indices)], predicted_nb_tb)
 
@@ -141,15 +141,18 @@ def evaluate_naive_bayes_bt(title_body_dtm, training_indices, y_true):
     end_time = time.time()
     print(f"Naive Bayes (Title or Body) Evaluation took {end_time - start_time:.4f} seconds.\n")
 
+
 def evaluate_logistic_regression_bt(title_body_dtm, training_indices, y_true):
     start_time = time.time()
     
+    # Scale the features for Logistic Regression
     scaler = StandardScaler(with_mean=False)  # Set with_mean=False for sparse matrices
     title_body_dtm_scaled = scaler.fit_transform(title_body_dtm)
 
     log_reg_fit_title_body = LogisticRegression(penalty='l2', solver='liblinear', max_iter=1000)
     log_reg_fit_title_body.fit(title_body_dtm_scaled[training_indices], y_true[training_indices])
 
+    # Predict using the rest of the data
     predicted_log_tb = log_reg_fit_title_body.predict(title_body_dtm_scaled[np.setdiff1d(np.arange(title_body_dtm.shape[0]), training_indices)])
     accuracy_log_tb = accuracy_score(y_true[np.setdiff1d(np.arange(y_true.shape[0]), training_indices)], predicted_log_tb)
 
@@ -158,12 +161,14 @@ def evaluate_logistic_regression_bt(title_body_dtm, training_indices, y_true):
     end_time = time.time()
     print(f"Logistic Regression (Title or Body) Evaluation took {end_time - start_time:.4f} seconds.\n")
 
+
 def evaluate_random_forest_bt(title_body_dtm, training_indices, y_true):
     start_time = time.time()
     
     rf_tb = RandomForestClassifier(n_estimators=500, random_state=123)
     rf_tb.fit(title_body_dtm[training_indices], y_true[training_indices])
 
+    # Predict using the rest of the data
     predicted_rf_tb = rf_tb.predict(title_body_dtm[np.setdiff1d(np.arange(title_body_dtm.shape[0]), training_indices)])
     accuracy_rf_tb = accuracy_score(y_true[np.setdiff1d(np.arange(y_true.shape[0]), training_indices)], predicted_rf_tb)
 
@@ -185,5 +190,3 @@ def evaluate_random_forest_bt(title_body_dtm, training_indices, y_true):
 
     end_time = time.time()
     print(f"Random Forest (Title or Body) Evaluation took {end_time - start_time:.4f} seconds.\n")
-
-

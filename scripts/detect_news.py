@@ -4,12 +4,12 @@ from sklearn.ensemble import RandomForestClassifier
 import sys
 import os
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../src')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
 
 from preprocess import vectorize_input
 
 # Load the saved model
-model_filename = 'model.joblib'
+model_filename = os.path.abspath(os.path.join(os.path.dirname(__file__), '../model.joblib'))
 rf_body_model = joblib.load(model_filename)
 
 # Function to preprocess the input and make a prediction

@@ -104,12 +104,13 @@ def combine_title_body_dtm(body_dtm, title_dtm):
     elif title_dtm.shape[1] < body_dtm.shape[1]:  # Pad title_dtm with zeros if body has more features
         title_dtm = np.pad(title_dtm, ((0, 0), (0, body_dtm.shape[1] - title_dtm.shape[1])), 'constant')
     
-    combined_dtm = body_dtm + title_dtm  # Element-wise addition
-    return combined_dtm
+    title_body_dtm = body_dtm + title_dtm  # Element-wise addition
+    return title_body_dtm
 
-combined_dtm = combine_title_body_dtm(body_dtm, title_dtm)
+title_body_dtm = combine_title_body_dtm(body_dtm, title_dtm)
 
 # Train-test split
 y_true = news_df['type'].values
-x_train, x_test, y_train, y_test = train_test_split(combined_dtm, y_true, test_size=0.25, random_state=123, stratify=y_true)
+x_train, x_test, y_train, y_test = train_test_split(title_body_dtm, y_true, test_size=0.25, random_state=123, stratify=y_true)
 
+training_indices = np.random.choice(range(title_body_dtm.shape[0]), size=int(0.8 * title_body_dtm.shape[0]), replace=False)
