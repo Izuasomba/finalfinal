@@ -13,11 +13,11 @@ import pandas as pd
 import re
 import os
 
-# Define paths for data loading
+# Using absolute paths to load data
 base_path = os.path.dirname(os.path.abspath(__file__))
 data_dir = os.path.join(base_path, '../data')
 
-# Load datasets
+# Loading the datasets
 real_news = pd.read_csv(os.path.join(data_dir, 'BuzzFeed_real_news_content.csv'))
 fake_news = pd.read_csv(os.path.join(data_dir, 'BuzzFeed_fake_news_content.csv'))
 news_df = pd.concat([real_news, fake_news], ignore_index=True)
@@ -33,7 +33,7 @@ news_df['images'] = news_df['images'].notna().astype(int)
 def clean_text(text):
     return re.sub(r"…|⋆|–|‹|”|“|‘|’", " ", text)
 
-# Universal vectorizer function
+# Vectorizer function
 def vectorize_input(corpus, max_df=1.0, tokenizer=None):
     """
     Vectorizes input text corpus with optional max_df and tokenizer parameters.
@@ -77,7 +77,7 @@ def preprocess_body_corpus(corpus):
 
     return processed_corpus
 
-# Custom bigram tokenizer
+# Bigram tokenizer
 def bigram_tokenizer(text):
     tokens = word_tokenize(text.lower())
     stop_words = set(stopwords.words('english'))
@@ -100,17 +100,17 @@ bigram_dtm, bigram_vectorizer = vectorize_input(news_df['text'], tokenizer=bigra
 # Combine title and body document term matrix (DTM)
 def combine_title_body_dtm(body_dtm, title_dtm):
     # Assuming body_dtm and title_dtm are numpy arrays
-    if body_dtm.shape[1] < title_dtm.shape[1]:  # Pad body_dtm with zeros if title has more features
+    if body_dtm.shape[1] < title_dtm.shape[1]:  # Add zeros to body_dtm if title has more features
         body_dtm = np.pad(body_dtm, ((0, 0), (0, title_dtm.shape[1] - body_dtm.shape[1])), 'constant')
-    elif title_dtm.shape[1] < body_dtm.shape[1]:  # Pad title_dtm with zeros if body has more features
+    elif title_dtm.shape[1] < body_dtm.shape[1]:  # Add zeros to body_dtm if body has more features
         title_dtm = np.pad(title_dtm, ((0, 0), (0, body_dtm.shape[1] - title_dtm.shape[1])), 'constant')
     
-    title_body_dtm = body_dtm + title_dtm  # Element-wise addition
+    title_body_dtm = body_dtm + title_dtm  
     return title_body_dtm
 
 title_body_dtm = combine_title_body_dtm(body_dtm, title_dtm)
 
-# Train-test split
+# Train-test split (puling out a part of the data set for testing)
 random_seed = 42
 np.random.seed(random_seed)
 y_true = news_df['type'].values

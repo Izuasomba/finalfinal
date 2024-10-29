@@ -9,16 +9,13 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../src'
 
 from preprocess import preprocess_title_corpus, preprocess_body_corpus
 
-# Load the saved model
+# Load the saved logstic regressin model
 model_filename = os.path.abspath(os.path.join(os.path.dirname(__file__), '../model.joblib'))
 log_reg_model = joblib.load(model_filename)
 
-# Universal vectorizer function from your preprocess script
+# Vectorize the inputs
 def vectorize_input(corpus, max_df=1.0, tokenizer=None):
-    """
-    Vectorizes input text corpus with optional max_df and tokenizer parameters.
-    Adjusts min_df based on the number of documents if necessary.
-    """
+#   Check if the inputs are empty 
     if not corpus:
         return np.array([]), None  # Return empty if corpus is empty
 
@@ -30,8 +27,7 @@ def vectorize_input(corpus, max_df=1.0, tokenizer=None):
     
     return dtm.toarray(), vectorizer
 
-
-# Main detection function
+# The actual detection function
 def detect_news(title, body):
     # Preprocess title and body
     processed_title = preprocess_title_corpus([title])
