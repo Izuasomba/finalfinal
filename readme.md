@@ -55,6 +55,13 @@ To run the logistic regression script that evaluates both the body and title of 
 ``` bash
  python run.py logreg_bt.py
 ```
+Making a new prediction
+The already trained model has been saved locally (model.joblib) to make an inference on a new article, execute the following command:
+
+``` bash
+ python run.py detect_news.py
+```
+follow the prompt i.e provide the title and body of the article.
 
 Available Scripts
 detect_news.py: Script for classifying news articles.
